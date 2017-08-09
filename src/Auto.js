@@ -4,8 +4,6 @@ export default class Auto {
         this.coleso = 4;
         this.people = 0;
         this.maxPeople = 4;
-
-
     }
     drive(){
         this.speed = 60;

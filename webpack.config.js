@@ -1,9 +1,24 @@
 const path = require('path');
 
 module.exports = {
-    entry: './path/to/my/entry/file.js',
+    entry: './src/todo.js',
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'my-first-webpack.bundle.js'
+        path: path.resolve(__dirname, './build'),
+        filename: 'application.js'
+    },
+    module: {
+        rules:[
+            {
+                test: /\.less/,
+                exclude: /node_modules/,
+                use: [
+                    "style-loader",
+                    "css-loader",
+                    "less-loader",
+
+                ]
+            }
+        ]
+
     }
 };
