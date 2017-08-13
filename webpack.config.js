@@ -1,5 +1,5 @@
 const path = require('path');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: './src/todo.js',
     output: {
@@ -20,5 +20,6 @@ module.exports = {
             }
         ]
 
-    }
+    },
+    plugins: [new HtmlWebpackPlugin()]
 };

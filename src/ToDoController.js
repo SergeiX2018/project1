@@ -6,7 +6,11 @@ export default class ToDoController {
     addItem(item) {
         let todoListString = localStorage.getItem("todoList")
         let todoList = JSON.parse(todoListString)
-        todoList.push(item)
+        let elementObject = {
+            text: item,
+            status: false,
+        }
+        todoList.push(elementObject)
         todoListString = JSON.stringify(todoList)
         localStorage.setItem("todoList",todoListString)
 
@@ -17,11 +21,15 @@ export default class ToDoController {
         todoList =  todoList.filter((c, i) => i !==index)
         todoListString = JSON.stringify(todoList)
         localStorage.setItem("todoList",todoListString)
-
-
-
-
     }
+    setItemStatus(index,status) {
+        let todoListString = localStorage.getItem("todoList")
+        let todoList = JSON.parse(todoListString)
+         todoList[index].status = !todoList[index].status
+        todoListString = JSON.stringify(todoList)
+        localStorage.setItem("todoList",todoListString)
+        debugger
+}
 
 }
 

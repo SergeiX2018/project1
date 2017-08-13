@@ -11,23 +11,40 @@ export  default class ToDoView {
         this.todoList =  JSON.parse(window.localStorage.getItem("todoList"))
 
     }
-    renderItem(text, index, state) {
+    renderItem(obj, index, state) {
+        debugger
+        let checkbox = document.createElement("input")
+        checkbox.type = "checkbox"
         let body = document.body
-        let div = document.createElement("div")
+        let element = document.createElement("div")
         let deleteButton  = document.createElement("div")
-        div.textContent = text
+        deleteButton.className = "delete-button"
+        element.textContent = obj.text
 
-        div.id = "item-"+  index
-        div.className = "item"
+        element.id = "item-"+  index
+        if(obj.status == false) {
+            element.className = "item"
+
+        } else{
+            element.className = "checked"
+        }
         let currentIndex = "item-" + index
         let isRendering = document.getElementById(currentIndex)
         if (!isRendering) {
-              body.appendChild(div)
-            div.appendChild(input)
-            div.addEventListener("click" ,this.checkboxHandler.bind(this,index))
+              body.appendChild(element)
+            element.appendChild(deleteButton)
+            deleteButton.addEventListener("click" ,this.deleteButtonHandler.bind(this,index))
+            element.appendChild(checkbox)
+            checkbox.addEventListener("click" ,this.checkHandler.bind(this,index))
+
         }
 
     }
+     checkHandler(index) {
+         window.controllers.ToDoController.setItemStatus(index)
+         this.updateTodoList()
+         this.renderList()
+     }
     render() {
         let input = document.createElement("input")
         let body = document.body
@@ -50,8 +67,8 @@ export  default class ToDoView {
         }
         let len = this.todoList.length
         for (let i = 0; i<len ; i++) {
-            let text = this.todoList[i]
-            this.renderItem (text, i )
+            let obj = this.todoList[i]
+            this.renderItem (obj, i )
         }
 
 
@@ -65,7 +82,7 @@ export  default class ToDoView {
             this.renderList()
         }
     }
-    checkboxHandler(index) {debugger
+    deleteButtonHandler(index) {
         window.controllers.ToDoController.deleteItem(index)
         this.updateTodoList()
         this.renderList()
